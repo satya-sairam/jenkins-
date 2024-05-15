@@ -18,6 +18,8 @@ pipeline {
                     echo "Orchestration Control Plane: ${params.orchControlPlane}"
                     echo "Workload Master: ${params.workloadMaster}"
                     echo "Workload Worker: ${params.workloadWorker}"
+                    pwd 
+                    ls
                 }
             }
         }
