@@ -1,28 +1,31 @@
+
 pipeline {
     agent any
+    
     parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-
-        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+        string(name: 'orchestratormasternode', description: 'orchestrator-master-node')
+        string(name: 'workloadclustercontrolplane', description: ' workload-cluster- master node')
+        string(name: 'workloadclustercomputenode', description: 'workload cluster - worker node')
     }
+    
     stages {
-        stage('Example') {
+
+        stage('Configure SSH') {
             steps {
-                echo "Hello ${params.PERSON}"
 
-                echo "Biography: ${params.BIOGRAPHY}"
+    
+                script {
+    
+                    withCredentials([usernamePassword(credentialsId: 'sshcredentials', passwordVariable: 'ssh_password', usernameVariable: 'ssh_username')]) 
 
-                echo "Toggle: ${params.TOGGLE}"
-
-                echo "Choice: ${params.CHOICE}"
-
-                echo "Password: ${params.PASSWORD}"
+                    sh """
+                        pwd
+                        whoami
+                        ls -l
+                        chmod +x test.sh
+                        ./test.sh ${ssh_username} ${ssh_password} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
+                    """
+                }
             }
         }
     }
@@ -59,37 +62,6 @@ pipeline {
 
 
 
-
-
-// pipeline {
-//     agent any
-    
-//     parameters {
-//         string(name: 'sshUserName', description: 'SSH Username')
-//         string(name: 'sshPassword', description: 'SSH Password')
-//         string(name: 'orchestratormasternode', description: 'orchestrator-master-node')
-//         string(name: 'workloadclustercontrolplane', description: ' workload-cluster- master node')
-//         string(name: 'workloadclustercomputenode', description: 'workload cluster - worker node')
-//     }
-    
-//     stages {
-
-//         stage('Configure SSH') {
-//             steps {
-//                 script {
-
-//                     sh """
-//                         pwd
-//                         whoami
-//                         ls -l
-//                         chmod +x test.sh
-//                         ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
-//                     """
-//                 }
-//             }
-//         }
-//     }
-// }
 
 
 
@@ -152,6 +124,35 @@ pipeline {
 //                     ls
 //                      sh './test.sh ${params.sshusername}'
 //                 """
+//             }
+//         }
+//     }
+// // }
+// pipeline {
+//     agent any
+//     parameters {
+//         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+
+//         text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+
+//         booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+
+//         choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+
+//         password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+//     }
+//     stages {
+//         stage('Example') {
+//             steps {
+//                 echo "Hello ${params.PERSON}"
+
+//                 echo "Biography: ${params.BIOGRAPHY}"
+
+//                 echo "Toggle: ${params.TOGGLE}"
+
+//                 echo "Choice: ${params.CHOICE}"
+
+//                 echo "Password: ${params.PASSWORD}"
 //             }
 //         }
 //     }
