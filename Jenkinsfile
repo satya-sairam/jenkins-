@@ -3,6 +3,8 @@ pipeline {
     agent any
     
     parameters {
+        string(name: 'sshUserName', description: 'SSH Username')
+        password(name: 'sshPassword', defaultValue: 'SECRET', description: 'Enter your ssh password')
         string(name: 'orchestratormasternode', description: 'orchestrator-master-node')
         string(name: 'workloadclustercontrolplane', description: ' workload-cluster- master node')
         string(name: 'workloadclustercomputenode', description: 'workload cluster - worker node')
@@ -10,20 +12,15 @@ pipeline {
     
     stages {
 
-        stage('Configure SSH') {
+        stage('test') {
             steps {
-
-    
                 script {
-    
-                    withCredentials([usernamePassword(credentialsId: 'sshcredentials', passwordVariable: 'ssh_password', usernameVariable: 'ssh_username')]) 
-
                     sh """
                         pwd
                         whoami
                         ls -l
                         chmod +x test.sh
-                        ./test.sh ${ssh_username} ${ssh_password} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
+                        ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
                     """
                 }
             }
