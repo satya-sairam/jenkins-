@@ -17,7 +17,7 @@ pipeline {
 
                     sh """
                         pwd
-                        test.sh ${params.sshUserName} ${params.sshPassword} ${params.host1} ${params.host2} ${params.host3}
+                        ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.host1} ${params.host2} ${params.host3}
                     """
                 }
             }
