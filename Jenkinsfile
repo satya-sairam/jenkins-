@@ -27,10 +27,9 @@ pipeline {
                 sh """
                     pwd
                     ls
-                
+                     sh './update_yaml.sh ${params.sshusername}'
                 """
             }
         }
-        // Add more stages as needed
     }
 }
