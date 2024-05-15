@@ -27,7 +27,7 @@ pipeline {
                 sh """
                     pwd
                     ls
-                     sh './update_yaml.sh ${params.sshusername}'
+                     sh './test.sh ${params.sshusername}'
                 """
             }
         }
