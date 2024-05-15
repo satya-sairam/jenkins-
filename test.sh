@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Check if correct number of arguments are provided
 if [ "$#" -ne 5 ]; then
