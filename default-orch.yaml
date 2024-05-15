@@ -1,0 +1,14 @@
+defaultHostCredentials:
+  sshUserName: defaultusername
+  sshPassword: defaultpassword
+
+hosts:
+- host: "1.1.1.1"
+  labels:
+  - "role": "orch"
+- host: "2.2.2.2"
+  labels:
+  - "role": "controlplane"
+- host: "3.3.3.3"
+  labels:
+  - "role": "compute"

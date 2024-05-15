@@ -1,36 +1,26 @@
 #!/bin/bash
 
-# # Read the new SSH username from Jenkins parameter
-# new_ssh_username=$1
-
-# # Update the orch.yaml file using sed
-# sshUserName=$(grep "sshUserName" orch.yaml | cut -d ':' -f2 | tr -d '[:space:]')
-# replaced_yaml=$(sed "s/sshUserName: .*/sshUserName: $sshUserName/" newoutput.yaml)
-
-# # Create a new file orch-replaced.yaml with the updated content
-# cp orch.yaml orch-replaced.yaml
-
-# # Print out the contents of the replaced file
-# cat orch-replaced.yaml
-
-
-
-
-# Ensure a new SSH username is provided as an argument
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <new_ssh_username>"
+# Check if correct number of arguments are provided
+if [ "$#" -ne 5 ]; then
+    echo "Usage: $0 <sshUserName> <sshPassword> <host1> <host2> <host3>"
     exit 1
 fi
 
-# Read the new SSH username from the command line argument
-new_ssh_username=$1
+# Assigning arguments to variables
+sshUserName="$1"
+sshPassword="$2"
+host1="$3"
+host2="$4"
+host3="$5"
 
-# Update the orch.yaml file using sed
-sed -i "s/sshUserName: .*/sshUserName: ${new_ssh_username}/" orch.yaml
+# Convert sshPassword to base64
+sshPasswordBase64=$(echo -n "$sshPassword" | base64)
 
-# Create a new file orch-replaced.yaml with the updated content
-cp orch.yaml orch-replaced.yaml
+# Perform replacements and save to new file
+sed -e "s/sshUserName: .*/sshUserName: $sshUserName/" \
+    -e "s/sshPassword: .*/sshPassword: $sshPasswordBase64/" \
+    -e "s/host: \"1.1.1.1\"/host: \"$host1\"/" \
+    -e "s/host: \"2.2.2.2\"/host: \"$host2\"/" \
+    -e "s/host: \"3.3.3.3\"/host: \"$host3\"/" default.yaml > orch.yaml
 
-# Print out the contents of the replaced file
-cat orch-replaced.yaml
-
+cat orch.yaml
