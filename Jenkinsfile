@@ -4,9 +4,9 @@ pipeline {
     parameters {
         string(name: 'sshUserName', description: 'SSH Username')
         string(name: 'sshPassword', description: 'SSH Password')
-        string(name: 'orchestrator master node', description: 'orchestrator-master-node')
-        string(name: 'workload cluster - control plane', description: ' workload-cluster- master node')
-        string(name: 'workload cluster - compute node', description: 'workload cluster - worker node')
+        string(name: 'orchestratormasternode', description: 'orchestrator-master-node')
+        string(name: 'workloadclustercontrolplane', description: ' workload-cluster- master node')
+        string(name: 'workloadclustercomputenode', description: 'workload cluster - worker node')
     }
     
     stages {
@@ -17,7 +17,10 @@ pipeline {
 
                     sh """
                         pwd
-                        sudo ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.host1} ${params.host2} ${params.host3}
+                        whoami
+                        ls -l
+
+                        sudo ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
                     """
                 }
             }
