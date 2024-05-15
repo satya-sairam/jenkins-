@@ -24,4 +24,6 @@ sed -e "s/sshUserName: .*/sshUserName: $sshUserName/" \
     -e "s/host: \"3.3.3.3\"/host: \"$host3\"/" default-orch.yaml > orch.yaml
 
 cat default-orch.yaml
+
+-----------
 cat orch.yaml
