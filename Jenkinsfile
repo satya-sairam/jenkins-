@@ -19,8 +19,8 @@ pipeline {
                         pwd
                         whoami
                         ls -l
-
-                        sudo ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
+                        chmod +x test.sh
+                        ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
                     """
                 }
             }
