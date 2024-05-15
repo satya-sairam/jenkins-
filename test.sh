@@ -21,6 +21,7 @@ sed -e "s/sshUserName: .*/sshUserName: $sshUserName/" \
     -e "s/sshPassword: .*/sshPassword: $sshPasswordBase64/" \
     -e "s/host: \"1.1.1.1\"/host: \"$host1\"/" \
     -e "s/host: \"2.2.2.2\"/host: \"$host2\"/" \
-    -e "s/host: \"3.3.3.3\"/host: \"$host3\"/" default.yaml > orch.yaml
+    -e "s/host: \"3.3.3.3\"/host: \"$host3\"/" default-orch.yaml > orch.yaml
 
+cat default-orch.yaml
 cat orch.yaml
