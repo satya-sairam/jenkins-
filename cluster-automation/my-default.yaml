@@ -5,10 +5,10 @@ defaultHostCredentials:
 hosts:
 - host: "1.1.1.1"
   labels:
-  - "role": "orch"
+  - "role": "master"
 - host: "2.2.2.2"
   labels:
-  - "role": "controlplane"
+  - "role": "worker1"
 - host: "3.3.3.3"
   labels:
-  - "role": "compute"
+  - "role": "worker2"

@@ -5,9 +5,10 @@ pipeline {
     parameters {
         string(name: 'sshUserName', description: 'SSH Username')
         password(name: 'sshPassword', defaultValue: 'SECRET', description: 'Enter your ssh password')
-        string(name: 'orchestratormasternode', description: 'orchestrator-master-node')
-        string(name: 'workloadclustercontrolplane', description: ' workload-cluster- master node')
-        string(name: 'workloadclustercomputenode', description: 'workload cluster - worker node')
+        string(name: 'masternode', description: 'master-node')
+        string(name: 'worker1', description: ' worker-node-1')
+        string(name: 'worker2', description: 'worker-node-2')
+        string(name: 'deliverablespath', defaultValue: '/home/jenkins/test/cash/kubectl/1.29.0-7df0b6f', description: 'enter the directory path where deliverables are stored')
     }
     
     stages {
@@ -19,14 +20,106 @@ pipeline {
                         pwd
                         whoami
                         ls -l
-                        chmod +x test.sh
-                        ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
+                        chmod +x cluster-automation/parameters.sh
+                        ls -l
+                        cd cluster-automation
+                        ./parameters.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
+                    """
+                }
+            }
+        }
+
+        stage('orchestrator init') {
+            steps {
+                script {
+                    sh """
+                        chmod +x cluster-automation/test.sh
+                        ls -l
+                        cd cluster-automation
+                       ./test.sh ${params.deliverablespath}
                     """
                 }
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// pipeline {
+//     agent any
+    
+//     parameters {
+//         string(name: 'sshUserName', description: 'SSH Username')
+//         password(name: 'sshPassword', defaultValue: 'SECRET', description: 'Enter your ssh password')
+//         string(name: 'orchestratormasternode', description: 'orchestrator-master-node')
+//         string(name: 'workloadclustercontrolplane', description: ' workload-cluster- master node')
+//         string(name: 'workloadclustercomputenode', description: 'workload cluster - worker node')
+//     }
+    
+//     stages {
+
+//         stage('test') {
+//             steps {
+//                 script {
+//                     sh """
+//                         pwd
+//                         whoami
+//                         ls -l
+//                         chmod +x test.sh
+//                         ./test.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
+//                     """
+//                 }
+//             }
+//         }
+//     }
+// }
 
 
 
