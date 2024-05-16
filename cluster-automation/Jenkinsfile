@@ -18,11 +18,10 @@ pipeline {
                 script {
                     sh """
                         pwd
-                        whoami
-                        ls -l
-                        chmod +x cluster-automation/parameters.sh
-                        ls -l
                         cd cluster-automation
+                        chmod +x parameters.sh
+                        ls -l
+                        printenv
                         ./parameters.sh ${params.sshUserName} ${params.sshPassword} ${params.masternode} ${params.worker1} ${params.worker2}
                     """
                 }
