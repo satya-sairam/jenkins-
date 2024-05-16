@@ -26,7 +26,7 @@ update_new_yaml() {
         -e "s/host: \"3.3.3.3\"/host: \"$host3\"/" my-default.yaml > new-test.yaml
 
     pwd 
-    find / -name "new-test.yaml" -printf "%h\n"
+    sudo find / -name "new-test.yaml" -printf "%h\n"
 
 
 }
