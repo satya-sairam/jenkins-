@@ -23,7 +23,7 @@ pipeline {
                         chmod +x cluster-automation/parameters.sh
                         ls -l
                         cd cluster-automation
-                        ./parameters.sh ${params.sshUserName} ${params.sshPassword} ${params.orchestratormasternode} ${params.workloadclustercontrolplane} ${params.workloadclustercomputenode}
+                        ./parameters.sh ${params.sshUserName} ${params.sshPassword} ${params.masternode} ${params.worker1} ${params.worker2}
                     """
                 }
             }
