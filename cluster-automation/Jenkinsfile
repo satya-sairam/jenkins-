@@ -35,10 +35,15 @@ pipeline {
                         chmod +x cluster-automation/test.sh
                         ls -l
                         cd cluster-automation
-                       ./test.sh ${params.deliverablespath}
+                       ./test.sh ${params.deliverablespath} ${params.deliverablespath} 
                     """
                 }
             }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }

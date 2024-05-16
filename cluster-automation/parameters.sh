@@ -23,13 +23,12 @@ update_new_yaml() {
         -e "s/sshPassword: .*/sshPassword: $sshPasswordBase64/" \
         -e "s/host: \"1.1.1.1\"/host: \"$host1\"/" \
         -e "s/host: \"2.2.2.2\"/host: \"$host2\"/" \
-        -e "s/host: \"3.3.3.3\"/host: \"$host3\"/" my-default.yaml > new.yaml
+        -e "s/host: \"3.3.3.3\"/host: \"$host3\"/" my-default.yaml > new-test.yaml
 
-    cat my-default.yaml
+    pwd 
+    find / -name "new-test.yaml" -printf "%h\n"
 
-    echo "-------------------------------"
 
-    cat new.yaml
 }
 
 # Main function
