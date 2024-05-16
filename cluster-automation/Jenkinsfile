@@ -20,7 +20,6 @@ pipeline {
                         pwd
                         cd cluster-automation
                         chmod +x parameters.sh
-                        ls -l
                         printenv
                         ./parameters.sh ${params.sshUserName} ${params.sshPassword} ${params.masternode} ${params.worker1} ${params.worker2}
                     """
@@ -33,7 +32,6 @@ pipeline {
                 script {
                     sh """
                         chmod +x cluster-automation/test.sh
-                        ls -l
                         cd cluster-automation
                        ./test.sh ${params.deliverablespath} ${params.deliverablespath} 
                     """
